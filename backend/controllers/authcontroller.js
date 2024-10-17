@@ -1,27 +1,77 @@
-const User = require('../models/User.js');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const Client = require('../models/Client.js');
+const { sendEmail } = require('../units/emailService.js');
+const crypto = require('crypto');
 
-exports.signup = async (req, res) => {
-    const { username, email, password } = req.body;
-    try {
-        const newUser = new User({username, email, password});
-        await newUser.save();
-        res.status(201).json({message: 'User created successfully'});
-    } catch (error) {
-        res.status(400).json({ message : error.message});
-    }
-};
 
-exports.signin = async (req,res) => {
+exports.companyLogin = async (req, res) => {
     const { email, password } = req.body;
+    const companyEmail = process.env.EMAIL;
+    const companyPassword = process.env.PASSWORD;
+
     try {
-        const user = await User.findOne({email});
-        if(!user) {
-            return res.status(401).json({ message: 'Invalid email or password'});
+        if (email === companyEmail && password === companyPassword) {
+            const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1000d' });
+            return res.json({ token });
         }
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, { expiresIn: '100d'});
-        res.json({token});
+        return res.status(401).json({ message: 'Invalid credentials' });
     } catch (error) {
-        res.status(500).json({message: error.message});
+        console.error('Error during company login:', error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+exports.registerClient = async (req, res) => {
+    const {
+        companyName,
+        name,
+        ownerName,
+        enterOwnerName,
+        emailAddress,
+        email,
+        companyregistrationNumber,
+        enterRegNumber,
+        gstNumber,
+        entergstNumber,
+        field1,
+        field2,
+        field3,
+
+    } = req.body;
+    const clientPassword = crypto.randomBytes(8).toString('hex');
+
+    try {
+
+        const hashedPassword = await bcrypt.hash(clientPassword, 10);
+        const client = new Client({
+            companyName,
+            name,
+            ownerName,
+            enterOwnerName,
+            emailAddress,
+            email,
+            companyregistrationNumber,
+            enterRegNumber,
+            gstNumber,
+            entergstNumber,
+            field1,
+            field2,
+            field3,
+            password: hashedPassword,
+        });
+        await client.save();
+
+        const clientLink = `${req.protocol}://${req.get('host')}/client-login/${client._id}`;
+
+        await sendEmail(email, clientLink, clientPassword);
+        return res.json({
+            message: 'Client registered successfully, login link sent.',
+            generatedLink: clientLink
+        });
+    } catch (error) {
+        console.error('Error during client registration:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+};
+

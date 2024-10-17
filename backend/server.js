@@ -20,7 +20,7 @@ app.use(express.json());
 
 
 //ROutes
-app.use('/api/users', authRoutes);
+app.use('/api/auth', authRoutes);
 
 
 app.listen(PORT, () =>{
