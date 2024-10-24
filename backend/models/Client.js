@@ -3,18 +3,15 @@ const bcrypt = require("bcryptjs");
 
 const ClientSchema = new mongoose.Schema({
     companyName: { type: String, required: true },
-    name: { type: String, required: true },
     ownerName: { type: String, required: true },
-    enterOwnerName: {type: String, required: true},
-    emailAddress: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
-    companyregistrationNumber: { type: String, required: true },
-    enterRegNumber: { type: String, required: true },
+    registrationNumber: { type: String, required: true },
     gstNumber: { type: String },
-    entergstNumber :{ type: String },
     field1: { type: String },
     field2: { type: String },
     field3: { type: String },
+    clientURL: {type: String, required: true, unique: true},
+    // username: { type: String},
     password: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
 });

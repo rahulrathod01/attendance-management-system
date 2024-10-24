@@ -7,11 +7,32 @@ export const login = async (email, password) => {
     return response.json();
 };
 
-export const registerClient = async (name, email) => {
+export const registerClient = async ({
+    companyName, 
+    ownerName, 
+    email, 
+    registrationNumber, 
+    gstNumber,
+    field1,
+    field2,
+    field3
+}) => {
+    
     const response = await fetch('http://localhost:5000/api/auth/register-client', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify({ 
+            companyName, 
+            ownerName, 
+            email, 
+            registrationNumber, 
+            gstNumber,
+            field1,
+            field2,
+            field3 }),
     });
+    console.log(companyName,"companyName", 
+        ownerName,"ownerName", 
+        email, "email");
     return response.json();
 };

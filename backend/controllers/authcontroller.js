@@ -23,50 +23,46 @@ exports.companyLogin = async (req, res) => {
 };
 
 exports.registerClient = async (req, res) => {
+    console.log('Received body:', req.body);
     const {
         companyName,
-        name,
         ownerName,
-        enterOwnerName,
-        emailAddress,
         email,
-        companyregistrationNumber,
-        enterRegNumber,
+        registrationNumber,
         gstNumber,
-        entergstNumber,
         field1,
         field2,
         field3,
 
     } = req.body;
+
+    clientLink = `${req.protocol}://${req.get('host')}/client-login/${companyName}`;
+
+    // clientUsername = `${ownerName}.${companyName}`;
+
     const clientPassword = crypto.randomBytes(8).toString('hex');
 
     try {
 
         const hashedPassword = await bcrypt.hash(clientPassword, 10);
         const client = new Client({
-            companyName,
-            name,
-            ownerName,
-            enterOwnerName,
-            emailAddress,
-            email,
-            companyregistrationNumber,
-            enterRegNumber,
-            gstNumber,
-            entergstNumber,
-            field1,
-            field2,
-            field3,
+            companyName : companyName,
+            ownerName : ownerName,
+            email : email,
+            registrationNumber: registrationNumber,
+            gstNumber: gstNumber,
+            field1: field1,
+            field2: field2,
+            field3: field3,
+            clientURL: clientLink,
+            // username: clientUsername,
             password: hashedPassword,
         });
         await client.save();
 
-        const clientLink = `${req.protocol}://${req.get('host')}/client-login/${client._id}`;
-
-        await sendEmail(email, clientLink, clientPassword);
+        // await sendEmail(email, clientLink, clientPassword);
         return res.json({
-            message: 'Client registered successfully, login link sent.',
+            message: 'Client registered successfully and link generated',
             generatedLink: clientLink
         });
     } catch (error) {
