@@ -60,7 +60,7 @@ exports.registerClient = async (req, res) => {
         });
         await client.save();
 
-        // await sendEmail(email, clientLink, clientPassword);
+        await sendEmail(email, clientLink, clientPassword);
         return res.json({
             message: 'Client registered successfully and link generated',
             generatedLink: clientLink
