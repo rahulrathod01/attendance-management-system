@@ -1,77 +1,65 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const Client = require('../models/Client.js');
-const { sendEmail } = require('../units/emailService.js');
-const crypto = require('crypto');
-
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const Client = require("../models/Client.js");
+const { sendEmail } = require("../units/emailService.js");
+const crypto = require("crypto");
+const nodemailer = require('nodemailer')
 
 exports.companyLogin = async (req, res) => {
-    const { email, password } = req.body;
-    const companyEmail = process.env.EMAIL;
-    const companyPassword = process.env.PASSWORD;
+  const { email, password } = req.body;
+  const companyEmail = process.env.EMAIL;
+  const companyPassword = process.env.PASSWORD;
 
-    try {
-        if (email === companyEmail && password === companyPassword) {
-            const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '1000d' });
-            return res.json({ token });
-        }
-        return res.status(401).json({ message: 'Invalid credentials' });
-    } catch (error) {
-        console.error('Error during company login:', error);
-        return res.status(500).json({ message: 'Internal server error' });
+  try {
+    if (email === companyEmail && password === companyPassword) {
+      const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+        expiresIn: "1000d",
+      });
+      return res.json({ token });
     }
+    return res.status(401).json({ message: "Invalid credentials" });
+  } catch (error) {
+    console.error("Error during company login:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 exports.registerClient = async (req, res) => {
-    const {
-        companyName,
-        name,
-        ownerName,
-        enterOwnerName,
-        emailAddress,
-        email,
-        companyregistrationNumber,
-        enterRegNumber,
-        gstNumber,
-        entergstNumber,
-        field1,
-        field2,
-        field3,
+  console.log('Received body:', req.body);
+  const {
+      companyName,
+      ownerName,
+      email,
+      registrationNumber,
+      gstNumber
+  } = req.body;
 
-    } = req.body;
-    const clientPassword = crypto.randomBytes(8).toString('hex');
+  clientLink = `${req.protocol}://${req.get('host')}/client-login/${companyName}`;
 
-    try {
+  const clientPassword = crypto.randomBytes(8).toString('hex');
 
-        const hashedPassword = await bcrypt.hash(clientPassword, 10);
-        const client = new Client({
-            companyName,
-            name,
-            ownerName,
-            enterOwnerName,
-            emailAddress,
-            email,
-            companyregistrationNumber,
-            enterRegNumber,
-            gstNumber,
-            entergstNumber,
-            field1,
-            field2,
-            field3,
-            password: hashedPassword,
-        });
-        await client.save();
+  try {
 
-        const clientLink = `${req.protocol}://${req.get('host')}/client-login/${client._id}`;
+      const hashedPassword = await bcrypt.hash(clientPassword, 10);
+      const client = new Client({
+          companyName : companyName,
+          ownerName : ownerName,
+          email : email,
+          registrationNumber: registrationNumber,
+          gstNumber: gstNumber,
+          clientURL: clientLink,
+          password: hashedPassword,
+      });
+      await client.save();
 
-        await sendEmail(email, clientLink, clientPassword);
-        return res.json({
-            message: 'Client registered successfully, login link sent.',
-            generatedLink: clientLink
-        });
-    } catch (error) {
-        console.error('Error during client registration:', error);
-        return res.status(500).json({ message: 'Internal server error' });
-    }
+      await sendEmail(email, clientLink, clientPassword);
+      return res.json({
+          message: 'Client registered successfully and link generated',
+          generatedLink: clientLink
+      });
+  } catch (error) {
+      console.error('Error during client registration:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
