@@ -25,41 +25,55 @@ exports.companyLogin = async (req, res) => {
 };
 
 exports.registerClient = async (req, res) => {
-  console.log('Received body:', req.body);
-  const {
-      companyName,
-      ownerName,
-      email,
-      registrationNumber,
-      gstNumber
-  } = req.body;
+    const {
+        companyName,
+        name,
+        ownerName,
+        enterOwnerName,
+        emailAddress,
+        email,
+        companyregistrationNumber,
+        enterRegNumber,
+        gstNumber,
+        entergstNumber,
+        field1,
+        field2,
+        field3,
 
-  clientLink = `${req.protocol}://${req.get('host')}/client-login/${companyName}`;
-
-  const clientPassword = crypto.randomBytes(8).toString('hex');
+    } = req.body;
+    const clientPassword = crypto.randomBytes(8).toString('hex');
 
   try {
 
-      const hashedPassword = await bcrypt.hash(clientPassword, 10);
-      const client = new Client({
-          companyName : companyName,
-          ownerName : ownerName,
-          email : email,
-          registrationNumber: registrationNumber,
-          gstNumber: gstNumber,
-          clientURL: clientLink,
-          password: hashedPassword,
-      });
-      await client.save();
+        const hashedPassword = await bcrypt.hash(clientPassword, 10);
+        const client = new Client({
+            companyName,
+            name,
+            ownerName,
+            enterOwnerName,
+            emailAddress,
+            email,
+            companyregistrationNumber,
+            enterRegNumber,
+            gstNumber,
+            entergstNumber,
+            field1,
+            field2,
+            field3,
+            password: hashedPassword,
+        });
+        await client.save();
 
-      await sendEmail(email, clientLink, clientPassword);
-      return res.json({
-          message: 'Client registered successfully and link generated',
-          generatedLink: clientLink
-      });
-  } catch (error) {
-      console.error('Error during client registration:', error);
-      return res.status(500).json({ message: 'Internal server error' });
-  }
+        const clientLink = `${req.protocol}://${req.get('host')}/client-login/${client._id}`;
+
+        await sendEmail(email, clientLink, clientPassword);
+        return res.json({
+            message: 'Client registered successfully, login link sent.',
+            generatedLink: clientLink
+        });
+    } catch (error) {
+        console.error('Error during client registration:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 };
 

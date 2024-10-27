@@ -30,5 +30,5 @@ export const registerClient = async ({
         ownerName, "ownerName",
         email, "email"
     );
-    return response.json();
+    
 }

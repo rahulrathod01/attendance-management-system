@@ -28,7 +28,7 @@ const Register = () => {
     console.log(response.generatedLink,"response in frontend");
 
     setGeneratedLink(response.generatedLink);
-    console.log(generatedLink, "gen link");
+    alert('Client registered and login link sent');
   };
 
   useEffect(() => {
@@ -132,12 +132,79 @@ const Register = () => {
             />
           </div>
         </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <input 
+              className="registration-input" 
+              type="text" 
+              value={field1} 
+              onChange={e => setField1(e.target.value)} 
+              placeholder="Enter Field 1" 
+            />
+          </div>
+          <div className="form-group">
+            <input 
+              className="registration-input" 
+              type="text" 
+              value={''} 
+              onChange={e => setField2(e.target.value)} 
+              placeholder="Enter Field " 
+            />
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <input 
+              className="registration-input" 
+              type="text" 
+              value={field2} 
+              onChange={e => setField3(e.target.value)} 
+              placeholder="Enter Field 2" 
+            />
+          </div>
+          <div className="form-group">
+            <input 
+              className="registration-input" 
+              type="text" 
+              value={''} 
+              onChange={e => setField3(e.target.value)} 
+              placeholder="Enter Field " 
+            />
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <input 
+              className="registration-input" 
+              type="text" 
+              value={field3} 
+              onChange={e => setField3(e.target.value)} 
+              placeholder="Enter Field 3" 
+            />
+          </div>
+          <div className="form-group">
+            <input 
+              className="registration-input" 
+              type="text" 
+              value={''} 
+              onChange={e => setField3(e.target.value)} 
+              placeholder="Enter Field " 
+            />
+          </div>
+        </div>
+
+
+
       </form>
 
       <div className="button-group">
-        <button className="registration-button1" href='/#'>Back</button>
-        <button className="registration-button2" onClick={handleUpdate}>Update</button>
-        <button className="registration-button3" type='submit' onClick={handleSubmit}>Save</button>
+
+        <button className="registration-button">Back</button>
+        <button className="registration-button" onClick={handleUpdate}>Update</button>
+        <button className="registration-button">Save</button>
       </div>
 
       {generatedLink && (
