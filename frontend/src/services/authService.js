@@ -8,27 +8,27 @@ export const login = async (email, password) => {
 };
 
 export const registerClient = async ({
-    companyName,
+    companyName, 
     ownerName, 
     email, 
     registrationNumber, 
-    gstNumber
+    gstNumber,
+    field1
 }) => {
-    const response = await fetch(`http://localhost:5000/api/auth/register-client`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            companyName,
-            ownerName,
-            email,
-            registrationNumber,
-            gstNumber
-        }),
-    });
-    console.log(
-        companyName, "companyName",
-        ownerName, "ownerName",
-        email, "email"
-    );
     
-}
+    const response = await fetch('http://localhost:5000/api/auth/register-client', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            companyName, 
+            ownerName, 
+            email, 
+            registrationNumber, 
+            gstNumber,
+            field1}),
+    });
+    console.log(companyName,"companyName", 
+        ownerName,"ownerName", 
+        email, "email");
+    return response.json();
+};
