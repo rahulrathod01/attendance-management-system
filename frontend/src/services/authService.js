@@ -32,3 +32,18 @@ export const registerClient = async ({
         email, "email");
     return response.json();
 };
+
+
+
+export const clientLogin = async (email, password) => {
+    const response = await fetch('http://localhost:5000/api/client-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) {
+        throw new Error('Invalid email or password');
+    }
+
+    return response.json(); 
+};

@@ -1,5 +1,7 @@
+
 import { useEffect, useState } from 'react';
 import { registerClient } from '../services/authService';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './registration.css'; 
 
 const Register = () => {
@@ -10,90 +12,75 @@ const Register = () => {
   const [gstNumber, setGstNumber] = useState('');
   const [field1, setField1] = useState('');
   const [generatedLink, setGeneratedLink] = useState('');
+  
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(companyName,"companyName", 
-      ownerName,"ownerName", 
+    console.log(companyName, "companyName", 
+      ownerName, "ownerName", 
       email, "email");
 
-    const response = await registerClient({ 
-      companyName, 
-      ownerName, 
-      email, 
-      registrationNumber, 
-      gstNumber,
-      field1
-    });
+    try {
+      const response = await registerClient({ 
+        companyName, 
+        ownerName, 
+        email, 
+        registrationNumber, 
+        gstNumber,
+        field1
+      });
 
-    console.log(response,"response in frontend");
-    console.log(response.generatedLink,"response in frontend");
+      console.log(response, "response in frontend");
+      console.log(response.generatedLink, "response in frontend");
 
-    setGeneratedLink(response.generatedLink);
+      setGeneratedLink(response.generatedLink);
+    } catch (error) {
+      console.error('Registration failed:', error);
+      alert('Registration failed. Please try again.');
+    }
   };
 
   useEffect(() => {
     console.log(generatedLink, "Updated generated link");
   }, [generatedLink]);
-  
-
 
   const handleUpdate = () => {
     alert('Update functionality coming soon!');
   };
+
+  // Function to navigate to client login page
+  const handleLinkClick = () => {
+    navigate('/client-login'); // Redirect to client login page
+  };
+
   return (
     <div className="registration-container">
       <h1 className="registration-header">Register Client</h1>
       <form className="registration-form" onSubmit={handleSubmit}>
         <div className="form-row">
           <div className="form-group">
-            <h2 className="registration-input"> 
-              Company Name
-            </h2>
-          </div>
-          <div className="form-group">
+            <label className="registration-input">Company Name</label>
             <input 
               className="registration-input" 
               type="text" 
               value={companyName} 
               onChange={e => setCompanyName(e.target.value)} 
-              placeholder="Enter Name" 
+              placeholder="Enter Company Name" 
               required 
             />
           </div>
         </div>
 
         <div className="form-row">
-            <div className="form-group">
-                <h2 className="registration-input">
-                  Owner Name
-                </h2>
-            </div>
-            <div className="form-group">
-                <input 
-                className="registration-input" 
-                type="text" 
-                value={ownerName} 
-                onChange={e => setOwnerName(e.target.value)} 
-                placeholder="Enter Owner Name" 
-                required 
-                />
-          </div>
-        </div>
-
-        <div className="form-row">
           <div className="form-group">
-            <h2 className="registration-input">
-              Email Address
-            </h2>
-          </div>
-          <div className="form-group">
+            <label className="registration-input">Owner Name</label>
             <input 
               className="registration-input" 
               type="text" 
-              value={email} 
-              onChange={e => setEmail(e.target.value)} 
-              placeholder="Enter email" 
+              value={ownerName} 
+              onChange={e => setOwnerName(e.target.value)} 
+              placeholder="Enter Owner Name" 
               required 
             />
           </div>
@@ -101,28 +88,35 @@ const Register = () => {
 
         <div className="form-row">
           <div className="form-group">
-            <h2 className="registration-input">
-              Company Registration Number
-            </h2>
+            <label className="registration-input">Email Address</label>
+            <input 
+              className="registration-input" 
+              type="email" 
+              value={email} 
+              onChange={e => setEmail(e.target.value)} 
+              placeholder="Enter Email" 
+              required 
+            />
           </div>
+        </div>
+
+        <div className="form-row">
           <div className="form-group">
+            <label className="registration-input">Company Registration Number</label>
             <input 
               className="registration-input" 
               type="text" 
               value={registrationNumber} 
               onChange={e => setRegistrationNumber(e.target.value)} 
-              placeholder="Enter registration number" 
+              placeholder="Enter Registration Number" 
+              required 
             />
           </div>
         </div>
 
         <div className="form-row">
           <div className="form-group">
-            <h2 className="registration-input">
-              GST Number
-            </h2>
-          </div>
-          <div className="form-group">
+            <label className="registration-input">GST Number</label>
             <input 
               className="registration-input" 
               type="text" 
@@ -136,11 +130,7 @@ const Register = () => {
 
         <div className="form-row">
           <div className="form-group">
-            <h2 className="registration-input">
-              Enter Field 1
-            </h2>
-          </div>
-          <div className="form-group">
+            <label className="registration-input">Enter Field 1</label>
             <input 
               className="registration-input" 
               type="text" 
@@ -150,17 +140,25 @@ const Register = () => {
             />
           </div>
         </div>
+        
+        <div className="button-group">
+          <button className="registration-button" type='button' onClick={() => navigate('/')} >Back</button>
+          <button className="registration-button" onClick={handleUpdate}>Update</button>
+          <button className="registration-button" type='submit'>Save</button>
+        </div>
       </form>
-
-      <div className="button-group">
-        <button className="registration-button">Back</button>
-        <button className="registration-button" onClick={handleUpdate}>Update</button>
-        <button className="registration-button" type='submit' onClick={handleSubmit}>Save</button>
-      </div>
 
       {generatedLink && (
         <div className="generated-link-container">
-          <p>Your Company Portal Link: <a href={generatedLink}>{generatedLink}</a></p>
+          <p>Your Company Portal Link: 
+          <button 
+              className="link-button" 
+              onClick={handleLinkClick}
+              style={{ background: 'none', color: '#007bff', textDecoration: 'underline', border: 'none', padding: 0, cursor: 'pointer' }}
+            >
+              {generatedLink}
+            </button>
+          </p>
         </div>
       )}
     </div>

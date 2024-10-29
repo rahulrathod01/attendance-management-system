@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const connectDB = require('./config/db.js');
 const authRoutes = require('./routes/authRoutes.js');
+const clientRoutes = require('./routes/clientRouts.js');
 
 const dotenv = require('dotenv');
 
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 
 //ROutes
 app.use('/api/auth', authRoutes);
+app.use('/api/client-login', clientRoutes);
 
 
 app.listen(PORT, () =>{
