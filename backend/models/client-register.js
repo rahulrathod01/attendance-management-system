@@ -21,4 +21,4 @@ ClientSchema.pre("save", async function (next) {
   next();
 });
 
-module.exports = mongoose.model("Client", ClientSchema);
+module.exports = mongoose.model("register-client", ClientSchema);

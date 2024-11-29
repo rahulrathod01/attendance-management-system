@@ -1,27 +1,26 @@
-const nodemailer = require('nodemailer');
+const { text } = require("body-parser");
+const nodemailer = require("nodemailer");
 
-exports.sendEmail = async (to, link, password) => {
+exports.sendEmail = async (to, subject,link, password) => {
+  try {
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.NODEMAILER_EMAIL,
-            pass: process.env.NODEMAILER_PASSWORD,
-        },
+      service: "gmail",
+      auth: {
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_PASSWORD,
+      },
     });
-
     const mailOptions = {
-        from: process.env.NODEMAILER_EMAIL,
-        to,
-        subject: 'Client Login Details',
-        text: `Login here: ${link} with password: ${password}`,
-        //html: `<p>Login here: <a href="${link}">${link}</a></p><p>with password: ${password}</p>`,
+      from: process.env.NODEMAILER_EMAIL,
+      to,
+      subject,
+      text: `Login here: ${link}`,
+      
     };
-
-    try {
-        const info = await transporter.sendMail(mailOptions);
-        console.log('Email sent: ' + info.response);
-    } catch (error) {
-        console.error('Error sending email:', error);
-        throw new Error('Failed to send email');
-    }
+    await transporter.sendMail(mailOptions);
+    console.log("Email sent");
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw error;
+  }
 };

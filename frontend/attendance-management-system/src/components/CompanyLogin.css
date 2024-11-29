@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    max-width: 450px;
+    width: 100%;
+    margin: 20px;
+    text-align: center;
+}
+
+.logo img {
+    width: 120px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 28px;
+    color: #333333;
+    margin-bottom: 25px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.login-from-input {
+    width: 100%;
+    padding: 14px 16px;
+    padding-left: 50px;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.login-from-input:focus {
+    border-color: #007bff;
+    background-color: #ffffff;
+}
+
+.icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777777;
+    font-size: 20px;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.forgot-password {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.login-button {
+    width: 100%;
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        padding: 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .login-from-input {
+        font-size: 16px;
+    }
+
+    .login-button {
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo img {
+        width: 100px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .login-from-input {
+        padding: 12px 14px;
+        padding-left: 45px;
+    }
+
+    .icon {
+        font-size: 18px;
+    }
+
+    .login-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .forgot-password {
+        font-size: 14px;
+    }
+}
