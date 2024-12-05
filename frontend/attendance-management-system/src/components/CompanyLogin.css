@@ -1,162 +1,159 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f7fc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-}
-
-.login-container {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    max-width: 450px;
-    width: 100%;
-    margin: 20px;
-    text-align: center;
-}
-
-.logo img {
-    width: 120px;
-    margin-bottom: 30px;
-}
-
-h2 {
-    font-size: 28px;
-    color: #333333;
-    margin-bottom: 25px;
-}
-
-.login-form {
+/* General Container */
+.company-login-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-.form-group {
-    position: relative;
-}
-
-.login-from-input {
-    width: 100%;
-    padding: 14px 16px;
-    padding-left: 50px;
-    font-size: 18px;
-    border: 1px solid #ddd;
+    align-items: center;
+    padding: 40px;
+    background-color: #52d1f8;
     border-radius: 8px;
-    background-color: #fafafa;
+  }
+  
+  .company-logo {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .company-logo img {
+    width: 300px;
+    margin-bottom: 30px;
+  }
+  
+  h2 {
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: bold;
+  }
+  
+  /* Form Style */
+  .company-login-form {
+    width: 100%;
+    max-width: 450px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .company-form-group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .company-login-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 18px;
     outline: none;
-    transition: border-color 0.3s ease;
-}
-
-.login-from-input:focus {
-    border-color: #007bff;
-    background-color: #ffffff;
-}
-
-.icon {
+  }
+  
+  .icon {
     position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #777777;
+    top: 18px;
+    left: 12px;
     font-size: 20px;
-}
-
-.form-footer {
+  }
+  
+  .company-form-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
-}
-
-.remember-me {
+    margin-bottom: 20px;
+  }
+  
+  .company-remember-me {
     display: flex;
     align-items: center;
-    gap: 8px;
-}
-
-.forgot-password {
-    color: #007bff;
+  }
+  
+  .company-forgot-password {
     text-decoration: none;
     font-size: 16px;
-    transition: color 0.3s ease;
-}
-
-.forgot-password:hover {
-    color: #0056b3;
+    color: #007bff;
+  }
+  
+  .company-forgot-password:hover {
     text-decoration: underline;
-}
-
-.login-button {
+  }
+  
+  /* Button */
+  .company-login-button {
     width: 100%;
+    padding: 15px;
     background-color: #007bff;
-    color: #ffffff;
-    padding: 14px;
-    font-size: 18px;
-    font-weight: bold;
+    color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
+    font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
+  }
+  
+  .company-login-button:hover {
     background-color: #0056b3;
-}
-
-@media (max-width: 768px) {
-    .login-container {
-        padding: 30px;
+  }
+  
+  /* Error Message */
+  .company-error-message {
+    color: red;
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .company-login-container {
+      padding: 20px;
     }
-
+  
+    .company-logo img {
+      width: 250px;
+    }
+  
     h2 {
-        font-size: 24px;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
-
-    .login-from-input {
-        font-size: 16px;
+  
+    .company-login-form {
+      padding: 20px;
     }
-
-    .login-button {
-        font-size: 16px;
-        padding: 12px;
+  
+    .company-login-input {
+      font-size: 16px;
     }
-}
-
-@media (max-width: 480px) {
-    .logo img {
-        width: 100px;
+  
+    .company-login-button {
+      font-size: 16px;
+      padding: 12px;
     }
-
+  }
+  
+  @media (max-width: 480px) {
+    .company-login-container {
+      padding: 15px;
+    }
+  
+    .company-logo img {
+      width: 200px;
+    }
+  
     h2 {
-        font-size: 22px;
+      font-size: 22px;
+      margin-bottom: 15px;
     }
-
-    .login-from-input {
-        padding: 12px 14px;
-        padding-left: 45px;
+  
+    .company-login-form {
+      padding: 15px;
     }
-
-    .icon {
-        font-size: 18px;
+  
+    .company-login-input {
+      font-size: 14px;
     }
-
-    .login-button {
-        font-size: 14px;
-        padding: 10px;
+  
+    .company-login-button {
+      font-size: 14px;
+      padding: 10px;
     }
-
-    .forgot-password {
-        font-size: 14px;
-    }
-}
+  }
+  

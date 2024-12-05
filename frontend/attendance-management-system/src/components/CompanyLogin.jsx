@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import "./CompanyLogin.css";
 
@@ -6,6 +6,7 @@ const CompanyLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const login = async (email, password) => {
@@ -41,16 +42,16 @@ const CompanyLogin = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="logo">
-        <img src="/logo.png" alt="Talent Corners" />
+    <div className="company-login-container">
+      <div className="company-logo">
+        <img src="/logo.png" alt="Company Logo" />
       </div>
-      <h2>Login</h2>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="form-group">
+      <h2>COMPANY LOGIN</h2>
+      <form className="company-login-form" onSubmit={handleSubmit}>
+        <div className="company-form-group">
           <i className="fas fa-envelope icon"></i>
           <input
-            className="login-from-input"
+            className="company-login-input"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -58,10 +59,10 @@ const CompanyLogin = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="comapny-form-group">
           <i className="fas fa-lock icon"></i>
           <input
-            className="login-from-input"
+            className="company-login-input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -69,26 +70,27 @@ const CompanyLogin = () => {
             required
           />
         </div>
-        <div className="form-footer">
-          <div className="remember-me">
+        <div className="company-form-footer">
+          <div className="company-remember-me">
             <input
               type="checkbox"
-              id="remember-me"
+              id="company-remember-me"
               checked={rememberMe}
               onChange={() => setRememberMe(!rememberMe)}
             />
-            <label htmlFor="remember-me">Remember me</label>
+            <label htmlFor="company-remember-me">Remember me</label>
           </div>
-          <a href="/forgot-password" className="forgot-password">
+          <a href="/forgot-password" className="company-forgot-password">
             Forgot Password?
           </a>
         </div>
-        <button type="submit" className="login-button">
+        <button type="submit" className="company-login-button">
           Login
         </button>
       </form>
+      {errorMessage && <p className="companyt-error-message">{errorMessage}</p>}
     </div>
-  )
-}
+  );
+};
 
 export default CompanyLogin;

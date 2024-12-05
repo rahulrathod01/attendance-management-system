@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/login', companyLogin);
 router.post('/register-client', registerClient);
-router.post('/client/login', loginClient);
+router.post('/client-login', loginClient);
 
 module.exports = router;
 

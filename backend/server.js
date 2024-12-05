@@ -26,7 +26,6 @@ app.use(bodyParser.json());
 
 //ROutes
 app.use('/api/auth', authRoutes);
-app.use('/api/client', authRoutes)
 
 
 

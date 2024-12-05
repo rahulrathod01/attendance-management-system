@@ -3,6 +3,7 @@ import './App.css';
 import CompanyLogin from './components/CompanyLogin';
 import ClientRegister from './components/ClientRegister';
 import ClientLogin from './components/ClientLogin';
+import ClientDashboard from './components/ClientDashboard';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Route path="/" element={<CompanyLogin />} />
       <Route path='/register' element={<ClientRegister/>}/>
       <Route path='/client-login' element={<ClientLogin/>}/>
+      <Route path='/dashboard' element={<ClientDashboard/>}/>
     </Routes>
   </Router>
   );
