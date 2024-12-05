@@ -6,7 +6,7 @@ const CompanyLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage] = useState('');
   const navigate = useNavigate();
 
   const login = async (email, password) => {
